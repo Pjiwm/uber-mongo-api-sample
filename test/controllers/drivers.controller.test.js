@@ -27,4 +27,22 @@ describe('Drivers controller', () => {
         const foundDriver = await driver.findOne({ email: 'test@test.com' })
         assert(foundDriver === null)
     })
+
+    it('gets a driver from /api/driver/:id', async () => {
+        const newDriver = new driver({ email: 'new@test.com' })
+        await newDriver.save()
+        const foundDriver = await request(app).get(`/api/drivers/${newDriver._id}`)
+        assert(foundDriver.body._id.toString() === newDriver._id.toString())
+    })
+
+    it('gets all driversf from api/driver', async () => {
+        const driverCount = 10
+        for (let i = 0; i < driverCount; i++) {
+            const newDriver = new driver({ email: 'new@test.com' })
+            await newDriver.save()
+        }
+        const foundDrivers = await request(app).get('/api/drivers')
+        assert(foundDrivers.body.length === driverCount)
+
+    })
 })
