@@ -19,6 +19,11 @@ class DriversController {
         const newDriver = await driver.create(body).catch(next)
         res.send(newDriver)
     }
+
+    async edit({ body, params }, res, next) {
+        await driver.findByIdAndUpdate({ _id: params.id }, body).catch(next)
+        res.send(await driverfindById({ _id: params.id }).catch(next))
+    }
 }
 
 module.exports = new DriversController()
