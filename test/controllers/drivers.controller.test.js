@@ -15,8 +15,16 @@ describe('Drivers controller', () => {
     it('edits a driver from /api/driver/:id', async () => {
         const newDriver = new driver({ email: 't@t.com', driving: false })
         await newDriver.save()
-        await request(app).put(`/api/drivers/${newDriver._id}`).send({driving: true })
-        const foundDriver = await driver.findOne({email: 't@t.com'})
+        await request(app).put(`/api/drivers/${newDriver._id}`).send({ driving: true })
+        const foundDriver = await driver.findOne({ email: 't@t.com' })
         assert(foundDriver.driving === true)
+    })
+
+    it('removes a driver from /api/driver/:id', async () => {
+        const newDriver = new driver({ email: 'test@test.com' })
+        await newDriver.save()
+        await request(app).delete(`/api/drivers/${newDriver._id}`)
+        const foundDriver = await driver.findOne({ email: 'test@test.com' })
+        assert(foundDriver === null)
     })
 })

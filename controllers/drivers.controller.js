@@ -24,6 +24,11 @@ class DriversController {
         const editedDriver = await driver.findByIdAndUpdate({ _id: params.id }, body).catch(next)
         res.send(await driver.findById(params.id))
     }
+
+    async delete({body, params }, res, next) {
+        const removedDriver = await driver.findByIdAndDelete(params.id).catch(next)
+        res.status(204).send(removedDriver)
+    }
 }
 
 module.exports = new DriversController()
