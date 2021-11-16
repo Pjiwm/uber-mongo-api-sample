@@ -21,8 +21,8 @@ class DriversController {
     }
 
     async edit({ body, params }, res, next) {
-        await driver.findByIdAndUpdate({ _id: params.id }, body).catch(next)
-        res.send(await driverfindById({ _id: params.id }).catch(next))
+        const editedDriver = await driver.findByIdAndUpdate({ _id: params.id }, body).catch(next)
+        res.send(await driver.findById(params.id))
     }
 }
 
